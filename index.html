@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Terracota Estudio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Playfair Display', Georgia, serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f3e4d8;
+        color: #4d2d1b;
+      }
+
+      /* Stronger heading weights for logo-like appearance */
+      h1, h2, h3, h4, h5, h6, .site-title, .footer-title {
+        font-weight: 700;
+        letter-spacing: 0.02em;
+      }
+
+      /* Header: match footer color and sticky */
+      header {
+        background-color: #7d482d;
+        color: #f5e2d4;
+        padding: 1rem 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: inset 0 -1px 0 rgba(0,0,0,0.12);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        transition: background-color 200ms ease, color 200ms ease, box-shadow 200ms ease;
+      }
+
+      /* Buttons invert color on hover; header background stays the same */
+      nav a:hover,
+      nav a:focus {
+        background-color: #f5e2d4;
+        color: #4d2d1b;
+      }
+
+      /* Hero / site buttons also invert for consistency */
+      .button-primary:hover,
+      .button-primary:focus {
+        background: #ffffff;
+        color: #4d2d1b;
+        box-shadow: 0 16px 30px rgba(184,107,72,0.16);
+      }
+
+      .button-secondary:hover,
+      .button-secondary:focus {
+        background: #4d2d1b;
+        color: #ffffff;
+        border-color: transparent;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+      }
+
+      .logo {
+        width: 56px;
+        height: 56px;
+        background: rgba(255, 255, 255, 0.85);
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 1px 8px rgba(0,0,0,0.12);
+      }
+
+      .logo img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        display: block;
+      }
+
+      .site-title {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: 0.3px;
+        font-weight: 700;
+      }
+
+      nav .nav-list {
+        list-style: none;
+        display: flex;
+        gap: 1rem;
+        margin: 0;
+        padding: 0;
+        align-items: center;
+      }
+
+      nav a {
+        color: inherit;
+        text-decoration: none;
+        padding: 0.45rem 0.75rem;
+        border-radius: 999px;
+        font-weight: 600;
+        transition: background 0.25s ease, color 0.25s ease;
+      }
+
+      nav a:hover {
+        background: rgba(255,255,255,0.85);
+      }
+
+      nav a.cta {
+        background: #fff;
+        color: #4d2d1b;
+        padding: 0.55rem 1rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+      }
+
+      footer {
+        background-color: #7d482d;
+        color: #f5e2d4;
+        padding: 3rem 2rem 1rem;
+      }
+
+      .footer-inner {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+      }
+
+      .footer-brand {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        flex: 1 1 240px;
+      }
+
+      .footer-brand .logo {
+        width: 48px;
+        height: 48px;
+        background: rgba(255,255,255,0.12);
+      }
+
+      .footer-brand .site-title {
+        margin: 0;
+        font-size: 1.05rem;
+        letter-spacing: 0.08em;
+      }
+
+      .footer-col {
+        flex: 1 1 220px;
+        min-width: 220px;
+      }
+
+      .footer-title {
+        margin: 0 0 1rem;
+        font-size: 1.15rem;
+      }
+
+      .footer-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+      }
+
+      .footer-list li {
+        margin: 0;
+      }
+
+      .footer-list a,
+      .footer-list span {
+        color: #f5e2d4;
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+
+      .footer-divider {
+        margin: 2.5rem 0 0;
+        border-top: 1px solid rgba(245,226,212,0.45);
+      }
+
+      .footer-bottom {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10px 2rem 0;
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        color: #f5e2d4;
+        font-size: 0.95rem;
+      }
+
+      .footer-bottom a {
+        color: #f5e2d4;
+        text-decoration: none;
+      }
+
+      main {
+        padding: 0;
+        width: 100%;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .hero-section {
+        width: 100%;
+        min-height: 80vh;
+        background-color: #c8896a;
+        background-image: url("img/fondohero.png");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-blend-mode: multiply;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+      }
+
+      .hero-section .hero-container {
+        width: 100%;
+        max-width: 1200px;
+        padding: 3rem 2rem;
+      }
+
+      .hero-card {
+        background: #ffffff;
+        color: #4d2d1b;
+        padding: 2rem 2.25rem;
+        border-radius: 24px;
+        max-width: 520px;
+        box-shadow: 0 24px 50px rgba(0,0,0,0.18);
+      }
+
+      .about-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background-color: #f0dfca;
+        color: #4d2d1b;
+        display: flex;
+        justify-content: center;
+      }
+
+      .about-inner {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .about-image {
+        flex: 1 1 42%;
+        padding-left: 1rem;
+      }
+
+      .about-image img {
+        width: 100%;
+        height: auto;
+        border-radius: 28px;
+        object-fit: cover;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        display: block;
+      }
+
+      .about-copy {
+        flex: 1 1 50%;
+        padding-right: 1rem;
+      }
+
+      .about-copy h2 {
+        margin: 0 0 1.5rem;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        letter-spacing: 0.02em;
+      }
+
+      .about-boxes {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .about-box {
+        background: rgba(255,255,255,0.95);
+        color: #4d2d1b;
+        border-radius: 18px;
+        padding: 1.25rem 1.5rem;
+        font-weight: 700;
+        box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+      }
+
+      .products-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background: linear-gradient(135deg, #b86b48 0%, #d28b6d 55%, #ebc4aa 100%);
+        color: #fff;
+        display: flex;
+        justify-content: center;
+      }
+
+      .products-inner {
+        width: 100%;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .products-header {
+        text-align: center;
+        max-width: 760px;
+        margin: 0 auto;
+      }
+
+      .products-header h2,
+      .products-header h3 {
+        color: #f5e2d4;
+      }
+
+      .products-header h2 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+      }
+
+      .products-header h3 {
+        margin: 0;
+        font-size: clamp(1.15rem, 2vw, 1.4rem);
+        font-weight: 500;
+        opacity: 0.92;
+      }
+
+      .product-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 1.75rem;
+      }
+
+      .product-card {
+        background: rgba(255,255,255,0.95);
+        color: #4d2d1b;
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-card img {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 4 / 3;
+        object-fit: cover;
+        display: block;
+      }
+
+      .product-card-content {
+        padding: 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .product-card-price {
+        font-size: 1.05rem;
+        font-weight: 800;
+      }
+
+      .product-card-button {
+        background: #b86b48;
+        color: #f5e2d4;
+        border-radius: 999px;
+        padding: 0.85rem 1.25rem;
+        text-decoration: none;
+        font-weight: 700;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .product-card-button:hover {
+        transform: translateY(-1px);
+      }
+
+      .contact-section {
+        width: 100%;
+        padding: 4rem 2rem;
+        background-color: #f0dfca;
+        color: #4d2d1b;
+        display: flex;
+        justify-content: center;
+      }
+
+      .contact-card {
+        width: 100%;
+        max-width: 780px;
+        background: #fff;
+        border-radius: 28px;
+        padding: 20px;
+        box-shadow: 0 30px 80px rgba(0,0,0,0.12);
+      }
+
+      .contact-card h2 {
+        margin: 0 0 0.75rem;
+        font-size: clamp(2rem, 3vw, 2.6rem);
+        color: #4d2d1b;
+      }
+
+      .contact-card p {
+        margin: 0 0 2rem;
+        color: #6f4a33;
+      }
+
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem 5px;
+      }
+
+      .contact-grid > * {
+        min-width: 0;
+      }
+
+      .contact-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        min-width: 0;
+      }
+
+      .contact-field input,
+      .contact-field textarea {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      .contact-field label {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #4d2d1b;
+        text-transform: capitalize;
+      }
+
+      .contact-field input,
+      .contact-field textarea {
+        width: 100%;
+        border: 1px solid rgba(77,45,27,0.18);
+        border-radius: 16px;
+        padding: 0.95rem 1rem;
+        font-size: 1rem;
+        color: #3b1f12;
+        background: #fff;
+      }
+
+      .contact-field textarea {
+        resize: vertical;
+        min-height: 140px;
+      }
+
+      /* Capitalize placeholder text in form fields */
+      .contact-field input::placeholder,
+      .contact-field textarea::placeholder {
+        text-transform: capitalize;
+        color: rgba(77,45,27,0.55);
+      }
+
+      .contact-checkbox {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin: 1.5rem 0 2rem;
+      }
+
+      .contact-checkbox input {
+        width: 1rem;
+        height: 1rem;
+      }
+
+      .contact-submit {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #b86b48;
+        color: #f5e2d4;
+        padding: 0.95rem 1.6rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .contact-submit:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 16px 30px rgba(184,107,72,0.24);
+      }
+
+      @media (max-width: 960px) {
+        .about-inner {
+          flex-direction: column;
+          padding: 0;
+        }
+
+        .about-image,
+        .about-copy {
+          padding: 0;
+          width: 100%;
+        }
+
+        .product-cards {
+          grid-template-columns: 1fr;
+        }
+
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      .about-content h2 {
+        margin: 0;
+        font-size: clamp(2rem, 3vw, 2.8rem);
+        letter-spacing: 0.03em;
+      }
+
+      .hero-subtitle {
+        margin: 0 0 1rem;
+        font-size: 1.05rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #8b5137;
+      }
+
+      .hero-card h2 {
+        margin: 0 1.25rem 1.75rem 0;
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.05;
+      }
+
+      .hero-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 0.85rem 1.5rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+      }
+
+      .button:hover {
+        transform: translateY(-1px);
+      }
+
+      .button-primary,
+      .button-secondary {
+        background: #b86b48;
+        color: #f5e2d4;
+        box-shadow: 0 16px 30px rgba(184,107,72,0.24);
+        border: 1px solid transparent;
+      }
+
+      .button-secondary:hover,
+      .button-secondary:focus,
+      .button-primary:hover,
+      .button-primary:focus {
+        background: #ffffff;
+        color: #4d2d1b;
+        border-color: transparent;
+      }
+
+      @media (max-width: 960px) {
+        .hero-section {
+          justify-content: center;
+          padding: 2rem 1.5rem;
+        }
+
+        .hero-card {
+          max-width: 100%;
+          width: 100%;
+        }
+      }
+
+      /* Responsive simple */
+      @media (max-width: 640px) {
+        /* Header */
+        header {
+          flex-direction: column;
+          gap: 0.5rem;
+          align-items: stretch;
+          padding: 0.75rem 1rem;
+        }
+
+        .brand {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .logo {
+          width: 48px;
+          height: 48px;
+        }
+
+        nav .nav-list {
+          flex-direction: column;
+          gap: 0.5rem;
+          width: 100%;
+          margin-top: 0.25rem;
+        }
+
+        nav .nav-list li {
+          width: 100%;
+        }
+
+        nav a {
+          display: block;
+          width: 100%;
+          padding: 0.65rem 0.75rem;
+          border-radius: 12px;
+          text-align: left;
+        }
+
+        /* Hero */
+        .hero-section {
+          min-height: 60vh;
+          align-items: center;
+          padding: 1.25rem 0;
+          background-position: center top;
+        }
+
+        .hero-container {
+          padding: 2rem 1rem;
+        }
+
+        .hero-card {
+          max-width: 100%;
+          width: 100%;
+          padding: 1.5rem;
+          border-radius: 18px;
+          box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+        }
+
+        .hero-card h2 {
+          font-size: clamp(1.5rem, 6vw, 2.2rem);
+        }
+
+        /* Products */
+        .products-section {
+          padding: 2.5rem 1rem;
+        }
+
+        .product-card {
+          border-radius: 18px;
+        }
+
+        /* Contact */
+        .contact-card {
+          padding: 14px;
+        }
+
+        .contact-field input,
+        .contact-field textarea {
+          font-size: 0.95rem;
+          padding: 0.85rem;
+        }
+
+        /* Footer */
+        .footer-inner {
+          flex-direction: column;
+          gap: 1rem;
+          align-items: center;
+          text-align: center;
+        }
+
+        .footer-bottom {
+          padding: 10px 1rem 0;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="brand">
+        <div class="logo">
+          <img src="img/logo.png" alt="Logo Terracota Estudio" />
+        </div>
+        <h1 class="site-title">Terracota Estudio</h1>
+      </div>
+
+      <nav aria-label="Navegación principal">
+        <ul class="nav-list">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#sobre">Sobre nosotros</a></li>
+          <li><a href="#nuestras-piezas">Tienda</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+          <li><a href="#nuestras-piezas" class="cta">Ver tienda →</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <section id="inicio" class="hero-section">
+        <div class="hero-container">
+          <div class="hero-card">
+            <p class="hero-subtitle">Ceramica Artesanal - Buenos Aires</p>
+            <h2>Piezas únicas hechas a mano</h2>
+            <div class="hero-actions">
+              <a href="#nuestras-piezas" class="button button-primary">Ver productos</a>
+              <a href="#sobre" class="button button-secondary">Nuestra historia</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre" class="about-section">
+        <div class="about-inner">
+          <div class="about-image">
+            <img src="img/fotonosotros.png" alt="Foto sobre nosotros" />
+          </div>
+          <div class="about-copy">
+            <h2>Nuestros alumnos</h2>
+            <p>Descubrí piezas en cerámica hechas con cuidado, acabado artesanal y espíritu creativo.</p>
+            <div class="about-boxes">
+              <div class="about-box">100% artesanal</div>
+              <div class="about-box">Envios a todo el pais</div>
+              <div class="about-box">Pedidos personalizados</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="nuestras-piezas" class="products-section">
+        <div class="products-inner">
+          <div class="products-header">
+            <h2>Nuestras Piezas</h2>
+            <h3>Colección actual - Hace click para ver más detalles</h3>
+          </div>
+          <div class="product-cards">
+            <article class="product-card">
+              <img src="img/card1.jpg" alt="Pieza 1" />
+              <div class="product-card-content">
+                <span class="product-card-price">$12.000</span>
+                <a href="#" class="product-card-button">+ Carrito</a>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="img/card2.jpg" alt="Pieza 2" />
+              <div class="product-card-content">
+                <span class="product-card-price">$15.000</span>
+                <a href="#" class="product-card-button">+ Carrito</a>
+              </div>
+            </article>
+            <article class="product-card">
+              <img src="img/card3.jpg" alt="Pieza 3" />
+              <div class="product-card-content">
+                <span class="product-card-price">$14.000</span>
+                <a href="#" class="product-card-button">+ Carrito</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contacto" class="contact-section">
+        <div class="contact-card">
+          <h2>Contacto</h2>
+          <p>Escribinos para consultas, pedidos personalizados y novedades de nuestras piezas en cerámica.</p>
+          <div class="contact-grid">
+            <div class="contact-field">
+              <label for="nombre">Nombre</label>
+              <input id="nombre" type="text" placeholder="nombre completo" />
+            </div>
+            <div class="contact-field">
+              <label for="direccion">Dirección</label>
+              <input id="direccion" type="text" placeholder="ingresa tu direccion" />
+            </div>
+            <div class="contact-field">
+              <label for="email">Email</label>
+              <input id="email" type="email" placeholder="tumail@ejemplo.com" />
+            </div>
+            <div class="contact-field">
+              <label for="telefono">Teléfono</label>
+              <input id="telefono" type="tel" placeholder="ingresa tu telefono" />
+            </div>
+            <div class="contact-field" style="grid-column: span 2;">
+              <label for="mensaje">Mensaje</label>
+              <textarea id="mensaje" placeholder="escribinos un mensaje"></textarea>
+            </div>
+          </div>
+          <div class="contact-checkbox">
+            <input id="novedades" type="checkbox" />
+            <label for="novedades">Quiero recibir novedades y notificaciones</label>
+          </div>
+          <button type="button" class="contact-submit">Enviar Mensaje</button>
+        </div>
+      </section>
+    </main>
+    <footer>
+      <div class="footer-inner">
+        <div class="footer-brand">
+          <div class="logo">
+            <img src="img/logo.png" alt="Logo Terracota Estudio" />
+          </div>
+          <div>
+            <h3 class="footer-title">Terracota Estudio</h3>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Navegación</h3>
+          <ul class="footer-list">
+            <li><span>→ Inicio</span></li>
+            <li><span>→ Nosotros</span></li>
+            <li><span>→ Tienda</span></li>
+            <li><span>→ Contacto</span></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h3 class="footer-title">Categorías</h3>
+          <ul class="footer-list">
+            <li><span>→ Tazas y Bowls</span></li>
+            <li><span>→ Floreros</span></li>
+            <li><span>→ Decoración</span></li>
+            <li><span>→ Kits regalo</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-divider"></div>
+
+      <div class="footer-bottom">
+        <span>© 2024 Terracota Studio — Todos los derechos reservados</span>
+        <a href="#">Política de privacidad</a>
+        <a href="#">Términos y Condiciones</a>
+      </div>
+    </footer>
+
+    <script src="app.js" defer></script>
+  </body>
+</html>
